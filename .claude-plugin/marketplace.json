@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
-  "name": "edwin-castillo",
+  "name": "claude-code-session-cleanup",
   "version": "1.0.0",
-  "description": "Claude Code plugins by Edwin Castillo",
+  "description": "session-cleanup for Claude Code, by Edwin Castillo",
   "owner": {
     "name": "Edwin Castillo"
   },

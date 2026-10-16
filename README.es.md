@@ -2,14 +2,12 @@
 
 Autor: Edwin Castillo · [Read in English](README.md)
 
-Un marketplace de plugins para Claude Code. Se agrega una vez y se instalan los plugins que se quieran.
+Se instala desde Claude Code:
 
 ```
-/plugin marketplace add edncastillo-cloud/claude-plugins
-/plugin install session-cleanup@edwin-castillo
+/plugin marketplace add edncastillo-cloud/claude-code-session-cleanup
+/plugin install session-cleanup@claude-code-session-cleanup
 ```
-
-## session-cleanup
 
 Claude Code de escritorio mantiene vivo un proceso `claude.exe` (~220 MB) más sus servidores MCP por cada sesión que no has archivado. Una docena de sesiones ociosas retiene fácilmente 3–4 GB. `session-cleanup` muestra a dónde se va esa memoria y la libera, siempre preguntando antes.
 
