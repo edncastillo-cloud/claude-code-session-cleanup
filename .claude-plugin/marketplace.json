@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "edwin-castillo",
+  "version": "1.0.0",
+  "description": "Claude Code plugins by Edwin Castillo",
+  "owner": {
+    "name": "Edwin Castillo"
+  },
+  "plugins": [
+    {
+      "name": "session-cleanup",
+      "description": "Free memory in Claude Code desktop on Windows: diagnose memory per session, archive inactive sessions and close orphan processes (MCP servers, tool shells) left by dead sessions, always with confirmation.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Edwin Castillo"
+      },
+      "source": "./plugins/session-cleanup",
+      "category": "productivity"
+    }
+  ]
+}

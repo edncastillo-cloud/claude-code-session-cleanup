@@ -1,0 +1,9 @@
+{
+  "name": "session-cleanup",
+  "version": "1.0.0",
+  "description": "Free memory in Claude Code desktop on Windows: diagnose memory per session, archive inactive sessions and close orphan processes (MCP servers, tool shells) left by dead sessions, always with confirmation.",
+  "author": {
+    "name": "Edwin Castillo"
+  },
+  "license": "MIT"
+}
