@@ -12,8 +12,10 @@
 // auto-archive would archive it (it also requires >= N days without focus). Candidates and MB per
 // threshold (1, 3, 7 and N). --json prints the same content as JSON.
 //
-// Orphans: processes started by a session that no longer have any live claude.exe among their
-// ancestors. They are recognised by command line:
+// Orphans: process trees started by a session whose root no longer has a live parent (the parent
+// exited, or its PID now belongs to a newer process). A tree with a live parent is never an orphan,
+// whatever that parent is: Claude Code as claude.exe or as node.exe (npm install), another agent or
+// an IDE using the same MCP servers. They are recognised by command line:
 //   mcp    stdio MCP servers configured in ~/.claude.json (user and per project), in each
 //          project's .mcp.json, in %APPDATA%\Claude\claude_desktop_config.json and in the
 //          .mcp.json files under ~/.claude/plugins.
@@ -143,17 +145,13 @@ function mcpSignatures() {
   return signatures;
 }
 
-// Session orphans: roots of trees started by a session with no live claude.exe above them.
+// Session orphans: roots of trees started by a session whose parent is no longer alive.
 function findOrphans(processes) {
   const byPid = new Map(processes.map((p) => [p.pid, p]));
   const parent = (p) => { const q = byPid.get(p.ppid); return q && q.started <= p.started ? q : null; };
-  const underClaude = (p) => {
-    const seen = new Set();
-    for (let q = parent(p); q && !seen.has(q.pid); q = parent(q)) { seen.add(q.pid); if (/^claude\.exe$/i.test(q.name)) return true; }
-    return false;
-  };
   const signatures = mcpSignatures();
   const kind = (p) => {
+    if (/^claude(\.exe)?$/i.test(p.name) || /claude-code[\\/]/i.test(p.cmd)) return null;
     const cmd = norm(p.cmd);
     const s = signatures.find((x) => cmd.includes(x.token));
     if (s) return { type: 'mcp', origin: s.server };
@@ -166,10 +164,8 @@ function findOrphans(processes) {
     while (stack.length) { const p = stack.pop(); out.push(p); for (const c of processes) if (c.ppid === p.pid && c.started >= p.started) stack.push(c); }
     return out;
   };
-  const candidates = processes.filter((p) => kind(p) && !underClaude(p));
-  const candidateIds = new Set(candidates.map((p) => p.pid));
-  return candidates
-    .filter((p) => { for (let q = parent(p); q; q = parent(q)) if (candidateIds.has(q.pid)) return false; return true; })
+  return processes
+    .filter((p) => kind(p) && !parent(p))
     .map((p) => {
       const nodes = tree(p);
       const dev = nodes.find((n) => DEV_SERVER.test(n.cmd));

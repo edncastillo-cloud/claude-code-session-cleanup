@@ -11,7 +11,7 @@ Every unarchived Claude Code desktop session can keep a `claude.exe` process ali
 
 **Inactivity criterion: days since the user's last request**, not since the last focus. Selecting a session in the sidebar (to archive it, or just to look at it) revives it and resets the app's auto-archive counter even if nothing is asked. That is why the app alone may never archive sessions that have gone unused for days.
 
-An **orphan** is a process a session started (a configured MCP server or a tool shell) that no longer has any live `claude.exe` above it: the session died and the process kept running. The diagnosis lists them in `orphans`; those containing a development server are marked `protected` and are never closed.
+An **orphan** is a process a session started (a configured MCP server or a tool shell) whose parent process no longer exists: the session died and the process kept running. A process whose parent is still alive is never an orphan, so MCP servers used by other agents or IDEs are left alone. The diagnosis lists them in `orphans`; those containing a development server are marked `protected` and are never closed.
 
 ## Steps
 
