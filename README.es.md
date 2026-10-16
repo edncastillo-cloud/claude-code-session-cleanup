@@ -1,4 +1,4 @@
-# Plugins de Claude Code de Edwin Castillo
+# Claude Code Session Cleanup de Edwin Castillo
 
 Autor: Edwin Castillo · [Read in English](README.md)
 
